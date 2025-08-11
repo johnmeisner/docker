@@ -1,0 +1,4 @@
+# vivado_install_config.txt
+Destination=/opt/Xilinx
+Edition=Vitis Unified Software Platform
+Components=Vitis,Vivado,DocNav

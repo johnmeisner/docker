@@ -1,0 +1,5 @@
+# vivado_install_config.txt
+Destination=/opt/Xilinx
+Edition=Vivado HL WebPACK
+Component_List=Vivado
+Eula=yes
