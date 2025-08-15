@@ -51,20 +51,6 @@ COPY vivado_install_config.txt /tmp/vivado_install_config.txt
 # The installer is first made executable and then run with the configuration file.
 # The installer and config files are removed after the installation to reduce image size.
 
-#RUN mkdir -p /opt/Xilinx \
-#    && chmod +x /tmp/vivado-installer.bin \
-#    && /tmp/vivado-installer.bin --batch /tmp/vivado_install_config.txt \
-#    && rm -f /tmp/vivado-installer.bin \
-#    && rm -f /tmp/vivado_install_config.txt
-
-#RUN mkdir -p /opt/Xilinx \
-#    && chmod +x /tmp/vivado-installer.bin \
-#    && /tmp/vivado-installer.bin --nox11 --tar xf -C /tmp/ \
-#    && /tmp/xsetup -b Install -c /tmp/vivado_install_config.txt \
-#    && rm -f /tmp/vivado-installer.bin \
-#    && rm -f /tmp/vivado_install_config.txt \
-#    && rm -rf /tmp/xsetup*
-
 RUN mkdir -p /opt/Xilinx \
     && chmod +x /tmp/vivado-installer.bin \
     && /tmp/vivado-installer.bin --nox11 --tar xf -C /tmp/ \
