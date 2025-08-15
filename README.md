@@ -13,4 +13,7 @@ Remember that this container is constructed by a multi layer build.
 
 Note: Dockerfile to be used for multi-layer docker container development.
 
+Added new vivado_docker_setup.sh script that needs to be run prior to building the vivado docker container which
+requires auth token and .lic license file.  User needs to obtain from AMD.
+
 Updated: 8/15/25
