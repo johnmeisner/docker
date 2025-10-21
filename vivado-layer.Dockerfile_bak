@@ -39,24 +39,25 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the Vivado Web Installer, the batch configuration file, AND THE AUTHENTICATION TOKEN.
-# The token is copied and renamed for clarity inside the container's /tmp directory.
+# Copy the Vivado Web Installer and the batch configuration file from the build context.
+# NOTE: Both files must be in the same directory as this Dockerfile.
+#COPY Xilinx_Unified_2025.1_0112_2339_Lin64.bin /tmp/vivado-installer.bin
+
 COPY FPGAs_AdaptiveSoCs_Unified_SDI_2025.1_0530_0145_Lin64.bin /tmp/vivado-installer.bin
+
 COPY vivado_install_config.txt /tmp/vivado_install_config.txt
-# 🔥 ADDED: Copy the pre-generated authentication key 🔥
-COPY wi_authentication_key /tmp/XilinxAuthToken.txt
 
 # Create the installation directory and run the Vivado installer in batch mode.
-# The token file is passed to 'xsetup' using the '-a' flag to enable non-interactive download.
+# The installer is first made executable and then run with the configuration file.
+# The installer and config files are removed after the installation to reduce image size.
 
 RUN mkdir -p /opt/Xilinx \
     && chmod +x /tmp/vivado-installer.bin \
     && /tmp/vivado-installer.bin --nox11 --tar xf -C /tmp/ \
-    && /tmp/xsetup --agree XilinxEULA,3rdPartyEULA -b Install -c /tmp/vivado_install_config.txt -a /tmp/XilinxAuthToken.txt
-#    && rm -f /tmp/vivado-installer.bin \
-#    && rm -f /tmp/vivado_install_config.txt \
-#    && rm -f /tmp/XilinxAuthToken.txt \
-#    && rm -rf /tmp/xsetup*
+    && /tmp/xsetup --agree XilinxEULA,3rdPartyEULA -b Install -c /tmp/vivado_install_config.txt \
+    && rm -f /tmp/vivado-installer.bin \
+    && rm -f /tmp/vivado_install_config.txt \
+    && rm -rf /tmp/xsetup*
 
 # Set the PATH and required environment variables so Vivado commands are easily accessible.
 ENV PATH="/opt/Xilinx/Vivado/2025.1/bin:$PATH"
